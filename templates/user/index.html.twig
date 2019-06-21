@@ -1,0 +1,65 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{'User index'|trans}}{% endblock %}
+
+{% block body %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="mb-3">
+                    <a class="btn btn-primary" href="{{ path('user_new') }}"><i class="fa fa-plus"></i> {{'Create new user'|trans}}</a>
+                </div>
+            {% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'Email'|trans }}</th>
+                <th>{{ 'IsActive'|trans }}</th>
+                <th>{{ 'Roles'|trans }}</th>
+                <th>{{ 'Audit'|trans }}</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                <th>{{ 'Actions'|trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr {{ 'ROLE_ADMIN' in user.roles ? 'class="table-danger"' : 'ROLE_ADMIN' in user.roles ? 'class="table-warning"' : 'ROLE_TEACHER' in user.roles ? 'class="table-primary"' : 'class="table-success"' }}>
+                <td>{{ user.email }}</td>
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+                <td>{{ user.audit ? 'Yes' : 'No' }}</td>
+                <td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <div class="form-check-inline">
+                        <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_show', {'id': user.id}) }}"><i class="fa fa-eye"></i> {{'Show'|trans}}</a>
+                        {% if 'ROLE_ADMIN' not in user.roles %}
+                            <a class="btn btn-primary btn-sm mr-2" href="{{ path('user_edit', {'id': user.id}) }}"><i class="fa fa-pencil"></i> {{'Edit'|trans}}</a>
+                            {{ include('user/_delete_form.html.twig') }}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{'no records found'|trans}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    {% block javascripts %}
+        <script src="/assets/js/jquery-3.2.1.min.js"></script>
+        <script src="/assets/js/popper.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/jquery.slimscroll.js"></script>
+        <script src="/assets/js/Chart.bundle.js"></script>
+        <script src="/assets/js/chart.js"></script>
+        <script src="/assets/js/app.js"></script>
+    {% endblock %}
+
+
+{% endblock %}

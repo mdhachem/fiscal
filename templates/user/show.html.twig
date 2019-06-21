@@ -1,0 +1,58 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}{{'User'|trans}} "{{ user.username }}"{% endblock %}
+
+{% block body %}
+
+    <h1>{{'User'|trans}} "{{ user.username }}"</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Id'|trans }}</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Username'|trans }}</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Email'|trans }}</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Audit'|trans }}</th>
+                <td>{{ user.audit ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'IsActive'|trans }}</th>
+                <td>{{ user.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Roles'|trans }}</th>
+                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary mr-2" href="{{ path('user_index') }}"><i class="fa fa-arrow-circle-left"></i> {{'Back to list'|trans}}</a>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}"><i class="fa fa-pencil-alt"></i> {{'Edit'|trans}}</a>
+    {% endif %}
+
+
+    {% block javascripts %}
+        <script src="/assets/js/jquery-3.2.1.min.js"></script>
+        <script src="/assets/js/popper.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/jquery.slimscroll.js"></script>
+        <script src="/assets/js/Chart.bundle.js"></script>
+        <script src="/assets/js/chart.js"></script>
+        <script src="/assets/js/app.js"></script>
+    {% endblock %}
+
+
+
+
+{% endblock %}

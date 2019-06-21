@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Sing up{% endblock %}
+
+
+{% block body %}
+	<div class="main-wrapper account-wrapper">
+			<div class="account-page">
+				<div class="account-center">
+					<div class="account-box">
+								{{ form_start(form)}}
+									{{ form_row(form.firstname,{'label':'First name'})}}
+									{{ form_row(form.lastname,{'label':'Last name'})}}
+									{{ form_row(form.email,{'label':'Email'}) }}
+									{{ form_row(form.password,{'label': 'Password'})}}
+									{{ form_row(form.confirm_password,{'label':'Password confirmation'})}}
+									<div class="form-group text-center">
+										<button type="submit" class="btn btn-success account-btn">Register</button>
+									</div>
+
+									<div class="text-center register-link">
+										You have an account? <a href="{{ path('app_login') }}">Login</a>
+									</div>
+								
+								{{ form_end(form)}}
+					</div>
+				</div>
+			</div>
+	</div>
+{% endblock body %}

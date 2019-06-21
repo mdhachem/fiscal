@@ -1,0 +1,41 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Quiz index{% endblock %}
+
+{% block body %}
+    <h1>Quiz index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Summary</th>
+                <th>IsActive</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quiz in quizzes %}
+            <tr>
+                <td>{{ quiz.id }}</td>
+                <td>{{ quiz.title }}</td>
+                <td>{{ quiz.summary }}</td>
+                <td>{{ quiz.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ quiz.createdAt ? quiz.createdAt|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
+                    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('quiz_new') }}">Create new</a>
+{% endblock %}
